@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1277,9 +1278,7 @@
             auth.signInWithEmailAndPassword(email, password)
                 .catch(error => showUIMessage('auth-feedback', error.message, 'error', 0));
         }
-        function signOutUser() {
-            auth.signOut().catch(error => console.error('Sign out error:', error));
-        }
+        signOutUser();
 
         function sendPasswordReset() {
             const emailInput = document.getElementById('email');
@@ -2593,6 +2592,13 @@
             if (event.target == editVocalNoteModal) closeEditVocalNoteModal();
             if (event.target == viewVocalNoteModal) closeViewVocalNoteModal();
             if (event.target == dataManagementModal) closeDataManagementModal();
+        }
+
+        // Auto-register Service Worker to support background text notifications [1]
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registered successfully:', reg))
+                .catch(err => console.warn('Service Worker registration skipped/failed:', err));
         }
 
         // Initialize user preferences and dark mode styles
